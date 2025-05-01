@@ -108,7 +108,30 @@ function displayAdminProducts() {
     productsList.appendChild(li);
   });
 }
+function displayProducts() {
+  const productsSection = document.getElementById("products");
+  const products = JSON.parse(localStorage.getItem("products")) || [];
 
+  productsSection.innerHTML = "";
+  products.forEach((product) => {
+    if (product.isVisible) {
+      const div = document.createElement("div");
+      div.classList.add("product-card");
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <p>السعر: ${product.price} جنيه</p>
+        <button>إضافة إلى العربة</button>
+      `;
+      productsSection.appendChild(div);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  displayProducts();
+});
 // عرض المنتجات في صفحة products.html
 function displayProducts() {
   const productsSection = document.getElementById("products");
