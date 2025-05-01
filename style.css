@@ -123,10 +123,37 @@ button:hover {
 }
 
 /* المنتجات في لوحة التحكم */
-#admin-products-list {
-  list-style: decimal;
-  margin-top: 20px;
-  padding-right: 20px;
+.admin-section {
+  padding: 20px;
+  margin: 20px;
+}
+
+#product-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#product-list ul li {
+  margin: 10px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #e55c00;
 }
 
 /* الفوتر */
