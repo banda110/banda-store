@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>الفواتير الإلكترونية زهره الاصلاح</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #2d3748;
+            line-height: 1.6;
+            padding: 30px 15px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 35px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1a202c;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        /* رأس الفاتورة */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            padding: 25px 30px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #2b6cb0, #2c5282);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .seller-info {
+            flex: 1;
+        }
+
+        .invoice-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .invoice-info h3,
+        .invoice-info p,
+        .seller-info h2,
+        .seller-info p {
+            color: #fff;
+        }
+
+        /* بيانات العميل */
+        .client-info {
+            background-color: #f7fafc;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(43, 54, 68, 0.1);
+        }
+
+        /* جدول العناصر */
+        .items-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin-bottom: 40px;
+        }
+
+        .items-table thead tr th {
+            background-color: #2b6cb0;
+            color: white;
+            padding: 15px 20px;
+            text-align: right;
+            border-radius: 10px 10px 0 0;
+            font-weight: 600;
+        }
+
+        .items-table tbody tr {
+            background: #f7fafc;
+            box-shadow: 0 2px 8px rgba(43, 54, 68, 0.1);
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .items-table tbody tr:hover {
+            background-color: #e2e8f0;
+        }
+
+        .items-table td {
+            padding: 15px 20px;
+            text-align: right;
+            vertical-align: middle;
+            border: none;
+        }
+
+        /* المجموع الكلي */
+        .total-section {
+            text-align: left;
+            margin-bottom: 30px;
+            padding: 20px 25px;
+            background-color: #ebf8ff;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #2b6cb0;
+            box-shadow: 0 4px 12px rgba(43, 54, 68, 0.1);
+        }
+
+        /* قسم الطباعة */
+        .print-section {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        /* أزرار مودرن مع ظل وحواف منحنية */
+        button,
+        .btn-primary,
+        .btn-print,
+        .btn-remove {
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(43, 108, 176, 0.3);
+            transition: all 0.3s ease;
+            color: #fff;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #2b6cb0);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2b6cb0, #2c5282);
+            box-shadow: 0 8px 20px rgba(43, 108, 176, 0.5);
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            box-shadow: 0 6px 15px rgba(56, 161, 105, 0.3);
+        }
+
+        .btn-print:hover {
+            background: linear-gradient(135deg, #2f855a, #276749);
+            box-shadow: 0 8px 20px rgba(56, 161, 105, 0.5);
+        }
+
+        .btn-remove {
+            background: linear-gradient(135deg, #e53e3e, #9b2c2c);
+            padding: 8px 18px;
+            font-size: 14px;
+            box-shadow: 0 6px 15px rgba(229, 62, 62, 0.3);
+        }
+
+        .btn-remove:hover {
+            background: linear-gradient(135deg, #9b2c2c, #742a2a);
+            box-shadow: 0 8px 20px rgba(229, 62, 62, 0.5);
+        }
+
+        /* حقول الإدخال */
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            color: #2d3748;
+            background-color: #f7fafc;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2b6cb0;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(43, 108, 176, 0.3);
+        }
+
+        /* استجابة */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .invoice-info {
+                text-align: right;
+                margin-top: 20px;
+            }
+        }
+
+        /* طباعة */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .container,
+            .container * {
+                visibility: visible;
+            }
+            .container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                padding: 15px;
+            }
+            button,
+            input,
+            textarea,
+            .seller-setup,
+            .add-item {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الفواتير الإلكترونية زهره الاصلاح</h1>
+
+        <!-- بيانات الموزع -->
+        <div class="seller-setup">
+            <h2>بيانات الموزع</h2>
+            <div class="form-group">
+                <label for="seller-name">اسم الموزع:</label>
+                <input type="text" id="seller-name" placeholder="أدخل اسم الموزع" />
+            </div>
+            <div class="form-group">
+                <label for="seller-description">وصف المتجر:</label>
+                <textarea id="seller-description" rows="3" placeholder="أدخل وصف المتجر"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="seller-phones">أرقام الهواتف (افصل بينهم بفاصلة):</label>
+                <input type="text" id="seller-phones" placeholder="مثال: 0100000000, 0111111111" />
+            </div>
+            <button class="btn-primary" id="save-seller">حفظ بيانات الموزع</button>
+        </div>
+
+        <hr style="margin: 40px 0" />
+
+        <!-- رأس الفاتورة -->
+        <div class="header">
+            <div class="seller-info">
+                <h2 id="display-seller-name">اسم الموزع</h2>
+                <p id="display-seller-description">وصف المتجر</p>
+                <p id="display-seller-phone">أرقام الهواتف:</p>
+            </div>
+
+            <div class="invoice-info">
+                <h3>فاتورة # <span id="invoice-number">001</span></h3>
+                <p>التاريخ: <input type="date" id="invoice-date-input" /></p>
+            </div>
+        </div>
+
+        <!-- بيانات العميل -->
+        <div class="client-info">
+            <h3>بيانات العميل</h3>
+            <div class="form-group">
+                <label for="client-name">اسم العميل:</label>
+                <input type="text" id="client-name" placeholder="أدخل اسم العميل" />
+            </div>
+        </div>
+
+        <!-- إضافة العناصر -->
+        <div class="add-item">
+            <h3>إضافة عناصر للفاتورة</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <label for="item-name">اسم العنصر:</label>
+                    <input type="text" id="item-name" placeholder="اسم العنصر" />
+                </div>
+                <div style="flex: 1; min-width: 100px;">
+                    <label for="item-price">السعر:</label>
+                    <input type="number" id="item-price" placeholder="السعر" min="0" step="0.01" />
+                </div>
+                <div style="flex: 1; min-width: 100px;">
+                    <label for="item-quantity">الكمية:</label>
+                    <input type="number" id="item-quantity" placeholder="الكمية" min="1" value="1" />
+                </div>
+                <div style="flex: 1; min-width: 100px; align-self: flex-end;">
+                    <button class="btn-primary" id="add-item-btn">إضافة عنصر</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- جدول العناصر -->
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>اسم العنصر</th>
+                    <th>السعر</th>
+                    <th>الكمية</th>
+                    <th>المجموع</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
+            <tbody id="items-list"></tbody>
+        </table>
+
+        <!-- الإجمالي -->
+        <div class="total-section">
+            <h3>المجموع الكلي: <span id="total-amount">0.00</span> ج.م</h3>
+        </div>
+
+        <!-- زر الطباعة -->
+        <div class="print-section">
+            <button class="btn-print" id="print-invoice-btn">طباعة الفاتورة</button>
+        </div>
+
+        <!-- معلومات صاحب المحل -->
+        <div class="owner-info" style="text-align:center; margin-top:40px; padding-top:20px; border-top: 2px dashed #ccc;">
+            <h3>معلومات الاتصال</h3>
+            <p id="owner-name">اسم صاحب المحل: </p>
+            <p id="owner-phone">هواتف: </p>
+        </div>
+    </div>
+
+    <script>
+        let items = [];
+        let totalAmount = 0;
+
+        const itemsList = document.getElementById('items-list');
+        const totalAmountElement = document.getElementById('total-amount');
+        const sellerNameElement = document.getElementById('display-seller-name');
+        const sellerDescriptionElement = document.getElementById('display-seller-description');
+        const sellerPhoneElement = document.getElementById('display-seller-phone');
+        const ownerNameElement = document.getElementById('owner-name');
+        const ownerPhoneElement = document.getElementById('owner-phone');
+
+        // حفظ بيانات الموزع
+        document.getElementById('save-seller').addEventListener('click', function () {
+            const sellerName = document.getElementById('seller-name').value.trim();
+            const sellerDescription = document.getElementById('seller-description').value.trim();
+            const sellerPhones = document.getElementById('seller-phones').value.trim();
+
+            if (sellerName && sellerDescription && sellerPhones) {
+                sellerNameElement.textContent = sellerName;
+                sellerDescriptionElement.textContent = sellerDescription;
+                sellerPhoneElement.textContent = `أرقام الهواتف: ${sellerPhones}`;
+                ownerNameElement.textContent = `اسم صاحب المحل: ${sellerName}`;
+                ownerPhoneElement.textContent = `هواتف: ${sellerPhones}`;
+                alert('تم حفظ بيانات الموزع بنجاح!');
+            } else {
+                alert('يرجى ملء جميع بيانات الموزع!');
+            }
+        });
+
+        // إضافة عنصر
+        document.getElementById('add-item-btn').addEventListener('click', function () {
+            const itemName = document.getElementById('item-name').value.trim();
+            const itemPrice = parseFloat(document.getElementById('item-price').value);
+            const itemQuantity = parseInt(document.getElementById('item-quantity').value);
+
+            if (itemName && !isNaN(itemPrice) && itemPrice >= 0 && !isNaN(itemQuantity) && itemQuantity > 0) {
+                const itemTotal = itemPrice * itemQuantity;
+
+                items.push({
+                    name: itemName,
+                    price: itemPrice,
+                    quantity: itemQuantity,
+                    total: itemTotal,
+                });
+
+                updateItemsList();
+                updateTotalAmount();
+
+                document.getElementById('item-name').value = '';
+                document.getElementById('item-price').value = '';
+                document.getElementById('item-quantity').value = '1';
+            } else {
+                alert('يرجى ملء جميع بيانات العنصر بشكل صحيح!');
+            }
+        });
+
+        function updateItemsList() {
+            itemsList.innerHTML = '';
+            items.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.price.toFixed(2)} ج.م</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.total.toFixed(2)} ج.م</td>
+                    <td><button class="btn-remove" data-index="${index}">حذف</button></td>
+                `;
+                itemsList.appendChild(row);
+            });
+
+            document.querySelectorAll('.btn-remove').forEach((button) => {
+                button.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    items.splice(index, 1);
+                    updateItemsList();
+                    updateTotalAmount();
+                });
+            });
+        }
+
+        function updateTotalAmount() {
+            totalAmount = items.reduce((sum, item) => sum + item.total, 0);
+            totalAmountElement.textContent = totalAmount.toFixed(2);
+        }
+
+        // طباعة الفاتورة
+        document.getElementById('print-invoice-btn').addEventListener('click', function () {
+            window.print();
+        });
+
+        // تعيين التاريخ الافتراضي اليوم
+        window.addEventListener('load', function () {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('invoice-date-input').value = today;
+        });
+    </script>
+</body>
+</html>
+
